@@ -45,13 +45,13 @@ namespace TicTacToe
                 {
                     int input = Convert.ToInt32(Console.ReadLine());
 
-
+                    checkPlayerIndexBounds(input);
                     GameGridArray[input] = Player;
                 }
                 catch (Exception e)
                 {
-                    Console.WriteLine(e.Message + " \nThere was an Error please try again...");
-                    Console.Write("Press any Key to continue...");
+                    Console.WriteLine(e.Message + " \nĮvyko klaida, bandykite dar kartą...");
+                    Console.Write("Spauskite bet kurį mygtuką...");
                     Console.ReadKey();
 
                 }
@@ -153,11 +153,21 @@ namespace TicTacToe
         static void checkPlayerSymbol(String inputPlayerSymbol)
         {
 
-             if (!inputPlayerSymbol.ToLower().Equals("x") && !inputPlayerSymbol.ToLower().Equals("y"))
+             if (!inputPlayerSymbol.ToLower().Equals("x") && !inputPlayerSymbol.ToLower().Equals("o"))
             {
                 Console.WriteLine("{0} - tokio simbolio nėra TicTacToe. Rinkis tarp x arba o", inputPlayerSymbol);
                 inputPlayerSymbol = Console.ReadLine();
                 checkPlayerSymbol(inputPlayerSymbol);
+            }
+        }
+
+        private static void checkPlayerIndexBounds(int input)
+        {
+            if (!Enumerable.Range(0, 8).Contains(input))
+            {
+                Console.WriteLine("{0} - indeksas yra už lentos ribų arba netinkamas. Rinkis nuo 0 iki 8", input);
+                input = Convert.ToInt32(Console.ReadLine());
+                checkPlayerIndexBounds(input);
             }
         }
 
