@@ -150,9 +150,15 @@ namespace TicTacToe
             }
         }
 
-        static void checkPlayerSymbol(String input)
+        static void checkPlayerSymbol(String inputPlayerSymbol)
         {
-            Console.WriteLine("{0} - tokio simbolio nėra TicTacToe. Rinkis tarp X arba O", input);
+
+             if (!inputPlayerSymbol.ToLower().Equals("x") && !inputPlayerSymbol.ToLower().Equals("y"))
+            {
+                Console.WriteLine("{0} - tokio simbolio nėra TicTacToe. Rinkis tarp x arba o", inputPlayerSymbol);
+                inputPlayerSymbol = Console.ReadLine();
+                checkPlayerSymbol(inputPlayerSymbol);
+            }
         }
 
         static void Main(string[] args)
@@ -160,18 +166,12 @@ namespace TicTacToe
 
             string x = "x";
             string O = "o";
-            Console.Write("Kuo nori žaisti X ar O: ");
+            Console.Write("Kuo nori žaisti x ar o: ");
             string input = Console.ReadLine();
 
-            /*
-            while (!input.ToLower().Equals("x") || !!input.ToLower().Equals("y"))
-            {
-                Console.WriteLine("{0} - tokio simbolio nėra TicTacToe. Rinkis tarp X arba O", input);
-                input = Console.ReadLine();
-            }
-            */
+            checkPlayerSymbol(input);
 
-            if (input.Equals("x"))
+            if (input.ToLower().Equals("x"))
             {
                 Player = "x";
                 Opponent = "o";
@@ -179,7 +179,7 @@ namespace TicTacToe
                 Console.ReadKey();
                 Grid();
             }
-            else if (input.Equals("O"))
+            else if (input.ToLower().Equals("o"))
             {
                 Player = "o";
                 Opponent = "x";
