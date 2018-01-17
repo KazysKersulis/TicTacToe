@@ -16,6 +16,22 @@ namespace TicTacToe
     class Program : Players
     {
 
+        private static void Grid()
+        {
+
+            string[] GameGridArray = new string[9];
+            int index = 0;
+
+            for (int i = 0; i < GameGridArray.Length; i++)
+            {
+                GameGridArray[i] = index.ToString();
+                index++;
+            }
+
+            Random Numbergen = new Random();
+
+        }
+
         public static void EndGame()
         {
             Console.WriteLine("Ar norite žaisti dar kartą?");
@@ -23,7 +39,7 @@ namespace TicTacToe
 
             if (input.ToLower().Equals("taip"))
             {
-                Board();
+                Grid();
 
             }
             else if (input.ToLower().Equals("ne"))
@@ -34,7 +50,7 @@ namespace TicTacToe
 
         static void Main(string[] args)
         {
-
+            Grid();
         }
     }
 }
