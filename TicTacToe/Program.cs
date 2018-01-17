@@ -207,6 +207,7 @@ namespace TicTacToe
 
             string x = "x";
             string O = "o";
+            Console.Write("--------TicTacToe--------");
             Console.Write("Kuo nori žaisti x ar o: ");
             string input = Console.ReadLine();
 
