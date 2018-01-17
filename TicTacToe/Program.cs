@@ -43,9 +43,14 @@ namespace TicTacToe
 
                 try
                 {
-                    int input = Convert.ToInt32(Console.ReadLine());
+                    string inputCoordinates = Console.ReadLine();
+
+                    int input = TryConvertToInt(inputCoordinates);
+
+                    //int input = Convert.ToInt32(inputCoordinates);
 
                     checkPlayerIndexBounds(input);
+                    input = checkIfIndexIsNotOccupied(input);
                     GameGridArray[input] = Player;
                 }
                 catch (Exception e)
@@ -110,6 +115,21 @@ namespace TicTacToe
             EndGame();
         }
 
+        private static int TryConvertToInt(string inputCoordinates)
+        {
+            int returnedInput;
+            int outInput;
+            bool result = Int32.TryParse(inputCoordinates, out returnedInput);
+            if (!result)
+            {
+                Console.WriteLine("Koordinate {0} yra neteisinga, bandykite įvesti nuo 0 iki 8", inputCoordinates);
+                inputCoordinates = Console.ReadLine();
+                TryConvertToInt(inputCoordinates);
+            }
+            outInput = Convert.ToInt32(inputCoordinates);
+            return outInput;
+        }
+
         private static bool CheckPlayerWin(int first, int second, int third)
         {
             return GameGridArray[first].ToLower().Equals(Player) && GameGridArray[second].ToLower().Equals(Player) && GameGridArray[third].ToLower().Equals(Player);
@@ -163,12 +183,23 @@ namespace TicTacToe
 
         private static void checkPlayerIndexBounds(int input)
         {
-            if (!Enumerable.Range(0, 8).Contains(input))
+            if (!Enumerable.Range(0, 9).Contains(input))
             {
                 Console.WriteLine("{0} - indeksas yra už lentos ribų arba netinkamas. Rinkis nuo 0 iki 8", input);
                 input = Convert.ToInt32(Console.ReadLine());
                 checkPlayerIndexBounds(input);
             }
+        }
+
+        private static int checkIfIndexIsNotOccupied(int input)
+        {
+            if (GameGridArray[input].ToLower().Equals("x") || GameGridArray[input].ToLower().Equals("o"))
+            {
+                Console.WriteLine("Laukelis {0} jau yra užimtas, rinkites kitą laisvą", input);
+                input = Convert.ToInt32(Console.ReadLine());
+                checkIfIndexIsNotOccupied(input);
+            }
+            return input;
         }
 
         static void Main(string[] args)
