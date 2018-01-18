@@ -86,14 +86,28 @@ namespace TicTacToe
                         GameGridArray[enemy] = Opponent;
                     }
                 }
-                else break;
+                
+
+                if (freeSpaces <= 1)
+                {
+                    WinorLose = "Lygiosios!";
+                    if (CheckPlayerWin(0, 1, 2) || CheckPlayerWin(0, 4, 8) || CheckPlayerWin(3, 4, 5) ||
+                    CheckPlayerWin(6, 7, 8) || CheckPlayerWin(6, 4, 2) || CheckPlayerWin(1, 4, 7) ||
+                    CheckPlayerWin(0, 3, 6) || CheckPlayerWin(2, 5, 8))
+
+                    {
+                        WinorLose = "Laimėjai";
+                        break;
+                    }
+                    break;
+                }
 
                 if (CheckPlayerWin(0, 1, 2) || CheckPlayerWin(0, 4, 8) || CheckPlayerWin(3, 4, 5) ||
                     CheckPlayerWin(6, 7, 8) || CheckPlayerWin(6, 4, 2) || CheckPlayerWin(1, 4, 7) ||
                     CheckPlayerWin(0, 3, 6) || CheckPlayerWin(2, 5, 8))
 
                 {
-                    WinorLose = "laimėjai";
+                    WinorLose = "Laimėjai";
                     break;
                 }
 
@@ -101,12 +115,7 @@ namespace TicTacToe
                          CheckOpponentWin(6, 7, 8) || CheckOpponentWin(6, 4, 2) || CheckOpponentWin(1, 4, 7) ||
                          CheckOpponentWin(0, 3, 6) || CheckOpponentWin(2, 5, 8))
                 {
-                    WinorLose = "pralaimėjai";
-                    break;
-                }
-                else if (freeSpaces <= 1)
-                {
-                    WinorLose = "Lygiosios!";
+                    WinorLose = "Pralaimėjai";
                     break;
                 }
                 else
