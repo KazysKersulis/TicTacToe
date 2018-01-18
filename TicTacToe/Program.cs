@@ -61,27 +61,32 @@ namespace TicTacToe
 
                 }
 
-                if (GameGridArray[enemy] == Opponent || GameGridArray[enemy] == Player)
+                if (!(freeSpaces <= 1))
                 {
-                    do
+                    if (GameGridArray[enemy] == Opponent || GameGridArray[enemy] == Player)
                     {
 
-                        enemy = Numbergen.Next(0, 9);
-
-                        if (GameGridArray[enemy] != Player)
+                        do
                         {
-                            GameGridArray[enemy] = Opponent;
-                            break;
 
-                        }
+                            enemy = Numbergen.Next(0, 9);
 
-                    } while (GameGridArray[enemy] == Opponent || GameGridArray[enemy] == Player);
+                            if (GameGridArray[enemy] != Player && GameGridArray[enemy] != Opponent)
+                            {
+                                GameGridArray[enemy] = Opponent;
+                                break;
 
+                            }
+
+                        } while (GameGridArray[enemy] != Opponent || GameGridArray[enemy] != Player);
+
+                    }
+                    else
+                    {
+                        GameGridArray[enemy] = Opponent;
+                    }
                 }
-                else
-                {
-                    GameGridArray[enemy] = Opponent;
-                }
+                else break;
 
                 if (CheckPlayerWin(0, 1, 2) || CheckPlayerWin(0, 4, 8) || CheckPlayerWin(3, 4, 5) ||
                     CheckPlayerWin(6, 7, 8) || CheckPlayerWin(6, 4, 2) || CheckPlayerWin(1, 4, 7) ||
@@ -99,17 +104,16 @@ namespace TicTacToe
                     WinorLose = "pralaimėjai";
                     break;
                 }
+                else if (freeSpaces <= 1)
+                {
+                    WinorLose = "Lygiosios!";
+                    break;
+                }
                 else
-                    freeSpaces--;
+                    freeSpaces = freeSpaces - 2;
 
             }
-            if (freeSpaces == 0)
-            {
-                Console.WriteLine("Lygiosios!");
-                EndGame();
-            }
-            else
-                Console.Clear();
+            Console.Clear();
 
             Console.WriteLine("{0}!", WinorLose);
             EndGame();
@@ -170,14 +174,14 @@ namespace TicTacToe
             }
         }
 
-        static void checkPlayerSymbol(String inputPlayerSymbol)
+        static void checkIfPlayerSymbolValid(String inputPlayerSymbol)
         {
 
-             if (!inputPlayerSymbol.ToLower().Equals("x") && !inputPlayerSymbol.ToLower().Equals("o"))
+            if (!inputPlayerSymbol.ToLower().Equals("x") && !inputPlayerSymbol.ToLower().Equals("o"))
             {
                 Console.WriteLine("{0} - tokio simbolio nėra TicTacToe. Rinkis tarp x arba o", inputPlayerSymbol);
                 inputPlayerSymbol = Console.ReadLine();
-                checkPlayerSymbol(inputPlayerSymbol);
+                checkIfPlayerSymbolValid(inputPlayerSymbol);
             }
         }
 
@@ -202,32 +206,33 @@ namespace TicTacToe
             return input;
         }
 
+        private static void StartGame()
+        {
+            Console.Write("Spauskite bet kurį mygtuką, kad pradėtume...");
+            Console.ReadKey();
+            Grid();
+        }
+
         static void Main(string[] args)
         {
 
-            string x = "x";
-            string O = "o";
-            Console.Write("--------TicTacToe--------");
+            Console.WriteLine("--------TicTacToe--------");
             Console.Write("Kuo nori žaisti x ar o: ");
             string input = Console.ReadLine();
 
-            checkPlayerSymbol(input);
+            checkIfPlayerSymbolValid(input);
 
             if (input.ToLower().Equals("x"))
             {
                 Player = "x";
                 Opponent = "o";
-                Console.Write("Spauskite bet kurį mygtuką, kad pradėtume...");
-                Console.ReadKey();
-                Grid();
+                StartGame();
             }
             else if (input.ToLower().Equals("o"))
             {
                 Player = "o";
                 Opponent = "x";
-                Console.Write("Spauskite bet kurį mygtuką, kad pradėtume...");
-                Console.ReadKey();
-                Grid();
+                StartGame();
             }
 
             Console.ReadLine();
